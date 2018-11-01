@@ -1,0 +1,56 @@
+{
+    "env": {
+        "es6": true,
+        "mocha": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "sinon": false,
+        "chai": false,
+        "expect": false
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
+        "curly": [
+            "error",
+            "all"
+        ],
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "no-var": "error",
+        "prefer-const": [
+            "error", {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
+            "error", {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ]
+    }
+}

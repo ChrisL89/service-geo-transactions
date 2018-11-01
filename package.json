@@ -1,0 +1,63 @@
+{
+  "name": "service-geo-transactions",
+  "version": "1.18.0",
+  "description": "Digital commission service for geo transactions",
+  "main": "src/bootstrap.js",
+  "scripts": {
+    "start": "node src/bootstrap.js",
+    "prestart:dev": "npm run create-db && npm run migrate-up",
+    "start:dev": "nodemon src/bootstrap.js",
+    "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore --ext .js .",
+    "pretest": "node bin/pre-test.js",
+    "test": "npm run test:unit",
+    "pretest:unit": "./bin/pre-test-unit.sh",
+    "test:unit": "env NODE_PATH=$NODE_PATH:$PWD mocha 'test/**/*.spec.js'",
+    "test-ci": "sleep 20; npm install --only=dev && npm run lint && npm run test",
+    "create-migration": "node bin/create-migration.js",
+    "migrate-up": "node bin/migrate-up.js",
+    "migrate-down": "node bin/migrate-down.js",
+    "create-db": "node bin/create-db.js",
+    "create-doc": "jsdoc -c jsdoc/config.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.tabcorp.com.au:TabDigital/service-geo-transactions.git"
+  },
+  "keywords": [
+    "geo-transactions",
+    "kafka"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tabdigital/api-logger": "^3.1.0",
+    "@tabdigital/api-middleware": "^3.0.0",
+    "@tabdigital/connect-router": "^4.5.0",
+    "@tabdigital/db-setup": "0.1.6",
+    "@tabdigital/json-config": "^4.0.5",
+    "@tabdigital/kafka-client": "^2.0.1",
+    "@tabdigital/restify-formatters": "^1.1.0",
+    "@tabdigital/s3-secrets": "1.1.1",
+    "async": "^2.6.1",
+    "bookshelf": "^0.13.3",
+    "knex": "^0.15.2",
+    "lodash": "^4.17.10",
+    "newrelic": "^4.8.0",
+    "pg": "^6.1.2",
+    "restify": "^7.2.1",
+    "restify-errors": "^6.1.1",
+    "strummer": "^2.5.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@tabdigital/release-version": "^1.0.3",
+    "@tabdigital/trigger-gocd-deployment": "^1.1.0",
+    "chai": "^4.1.2",
+    "eslint": "^5.1.0",
+    "jsdoc": "~3.5.5",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "sinon": "^6.1.3",
+    "supertest": "^3.1.0"
+  }
+}

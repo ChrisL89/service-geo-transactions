@@ -1,0 +1,1 @@
+ALTER TABLE geo_transactions RENAME COLUMN ticket_serial_numbers TO ticket_serial_number;

@@ -1,0 +1,27 @@
+version: "2.0"
+
+services:
+    service-geo-transactions:
+        image: "service-geo-transactions:latest"
+        container_name: service-geo-transactions
+        volumes:
+            - "~/.aws:/root/.aws"
+        ports:
+            - 8290:8290
+        environment:
+            APP_ENV: "Deployment"
+            SERVER_PORT: 8290
+            ECS_PROJECT_NAME: "digital-commission"
+            ECS_APPLICATION_IDENT: "service-geo-transactions"
+            ONCOURSE_STACK: "TAB-UAT-Yarra"
+            DB_HOST: "uat-yarra-geo-transactions.c9rift7i096q.ap-southeast-2.rds.amazonaws.com"
+            PUBLIC_URL: "http://service-geo-transactions:8290"
+            KAFKA_PROXY_ENDPOINT: "https://digital.rest.kafka.dev.analytics.in.cld"
+            KAFKA_SCHEMA_REGISTRY_ENDPOINT: "https://kafka-schema-registry.kafka.dev.analytics.in.cld"
+            NODE_ENV: "yarra"
+            TOPIC_PREFIX: "yarra"
+    # digital-avro-schemas:
+    #     image: "digital-avro-schemas:latest"
+    #     container_name: digital-avro-schemas
+    #     environment:
+    #         - APP_ENV=TAB-UAT-Yarra

@@ -1,0 +1,36 @@
+{
+    "loglevel": "info",
+    "publicURL": "{{env PUBLIC_URL}}",
+    "serverPort": "{{env SERVER_PORT}}",
+    "logfile": null,
+    "showStackTrace": false,
+    "enableTransactionDebugging": "{{env ENABLE_TRANSACTION_DEBUGGING}}",
+    "jwtSignPublicKeyPath": "/app/keys/jwt-sign.pem",
+    "kafkaClient": {
+      "enabled": true,
+      "nodeEnv": "{{env NODE_ENV}}",
+      "kafkaRestProxyURL": "{{env KAFKA_PROXY_ENDPOINT}}",
+      "kafkaRestProxyUsername": "{{env KAFKA_PROXY_USERNAME}}",
+      "kafkaRestProxyPassword": "{{env KAFKA_PROXY_PASSWORD}}",
+      "schemaRegistryURL": "{{env KAFKA_SCHEMA_REGISTRY_ENDPOINT}}",
+      "schemaLocalRepoLifetime": "5m",
+      "topicPrefix": "{{env TOPIC_PREFIX}}"
+    },
+    "databases": {
+      "postgres": {
+        "user": "{{env DB_ADMIN_USER}}",
+        "password":"{{env DB_ADMIN_PASSWORD}}",
+        "database": "postgres",
+        "host": "{{env DB_HOST}}",
+        "port": 5432
+      },
+      "geotransactions": {
+        "user": "{{env DB_USER}}",
+        "password":"{{env DB_PASSWORD}}",
+        "database": "geotransactions",
+        "host": "{{env DB_HOST}}",
+        "port": 5432,
+        "debug": false
+      }
+    }
+  }

@@ -1,0 +1,88 @@
+version: "2"
+
+services:
+    service-geo-transactions:
+        image: "service-geo-transactions:latest"
+        networks:
+            - digital_commission_default
+        container_name: service-geo-transactions
+        volumes:
+            - ./configs/:/app/configs/
+            - ./src/:/app/src/
+            - ./bin/:/app/bin/
+            - ./test/:/app/test/
+            - ./keys/:/app/keys/
+            - ./migrations/:/app/migrations/
+            - .eslintrc.json:/app/.eslintrc.json
+            - .eslintignore:/app/.eslintignore
+            - .gitignore:/app/.gitignore
+            - ${HOME}/.npmrc:/app/.npmrc
+        ports:
+            - 8290:8290
+        environment:
+            APP_ENV: "Deployment"
+            PUBLIC_URL: "http://service-geo-transactions:8290"
+            SERVER_PORT: 8290
+            ENABLE_TRANSACTION_DEBUGGING: 'true'
+            KAFKA_PROXY_ENDPOINT: "https://digital.rest.kafka.dev.analytics.in.cld"
+            KAFKA_SCHEMA_REGISTRY_ENDPOINT: "https://kafka-schema-registry.kafka.dev.analytics.in.cld"
+            # Due to digital-avro-schemas uses ci-buildkite to bring up docker dev environment
+            # the NODE_ENV and TOPIC_PREFIX have to be empty
+            # TODO: Once the digital-avro-schemas dev env configs updated then remove the comments
+            # NODE_ENV: "dev"
+            # TOPIC_PREFIX: "dev"
+            NODE_ENV: ""
+            TOPIC_PREFIX: "yarra"
+            KAFKA_PROXY_USERNAME: "digital"
+            KAFKA_PROXY_PASSWORD: "digital"
+            DB_HOST: "postgres"
+            DB_ADMIN_USER: "postgres"
+            DB_ADMIN_PASSWORD: "password"
+            DB_USER: "geotransactions"
+            DB_PASSWORD: "password"
+            ONCOURSE_STACK: "Dev"
+    digital-avro-schemas:
+        image: "digital-avro-schemas:latest"
+        container_name: digital-avro-schemas
+        environment:
+            # use ci-buildkite to bring up docker dev environment
+            # TODO: Refactor it to be Dev
+            - APP_ENV=ci-buildkite
+        networks:
+            - digital_commission_default
+    kafka:
+        image: landoop/fast-data-dev:latest
+        container_name: kafka
+        volumes:
+            - "./temp:/tmp"
+        #     - "/tmp/cp-kafka-connect-tabcorp-extension/target:/connectors"
+        environment:
+            - ADV_HOST=127.0.0.1         # Change to 192.168.99.100 if using Docker Toolbox
+            - RUNTESTS=0                 # Disable Running tests so the cluster starts faster
+        ports:
+            - 2181:2181                 # Zookeeper
+            - 3030:3030                 # Landoop UI
+            - 8082-8083:8082-8083       # REST Proxy,, Kafka Connect ports
+            - 8081:8081                 # Schema Registry
+            - 9581-9585:9581-9585       # JMX Ports
+            - 9092:9092                 # Kafka Broker
+        networks:
+            - digital_commission_default       # Kafka Broker
+    postgres:
+        image: mdillon/postgis
+        container_name: postgres
+        environment:
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "password"
+        networks:
+            - digital_commission_default
+    pg-admin:
+        image: fenglc/pgadmin4
+        container_name: pg-admin
+        ports:
+          - 5050:5050
+        networks:
+          - digital_commission_default
+
+networks:
+    digital_commission_default:

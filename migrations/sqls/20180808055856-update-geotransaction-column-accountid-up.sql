@@ -1,0 +1,1 @@
+ALTER TABLE geo_transactions ALTER COLUMN account_id TYPE BIGINT;

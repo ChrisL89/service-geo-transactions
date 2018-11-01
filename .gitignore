@@ -1,0 +1,20 @@
+# integration
+temp/
+deployment-trigger/
+swagger.json
+newrelic_agent.log
+
+# node env
+node_modules
+.npmrc
+npm-debug.log
+
+# IDE files
+.vscode
+.idea/
+
+#jsdoc document location
+docs/
+
+# test
+/test/keys
